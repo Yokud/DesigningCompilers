@@ -32,11 +32,16 @@ def inputOption():
 
 def main():
     regex = input(f"\nВведите регулярное выражение: ")
+
+    # ДКА получится сразу минимальным
     # regex = "(a|b)*abb"
-    # regex = "((abba)|(baab)|(baba)|(abab)|(bb)|(aa))*"
-    # regex = "((0110)|(1001)|(1010)|(0101)|(11)|(00))*1((0110)|(1001)|(1010)|(0101)|(11)|(00))*"
     # regex = "((0|1)(0|1)(0|1))*"
     # regex = "((0*00)|1)*"
+
+    # Полученный ДКА != мин. ДКА
+    # regex = "((abba)|(baab)|(baba)|(abab)|(bb)|(aa))*"
+    # regex = "((0110)|(1001)|(1010)|(0101)|(11)|(00))*1((0110)|(1001)|(1010)|(0101)|(11)|(00))*"
+    
     convertedRegex = convertRegexToDesiredFormat(regex)
     if convertedRegex is None:
         return
