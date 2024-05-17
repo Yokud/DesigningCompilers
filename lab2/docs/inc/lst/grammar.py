@@ -78,7 +78,7 @@ class Grammar:
                     rightRule[0] in self.notTerminals and \
                     rightRule[1] in self.notTerminals or \
                     len(rightRule) == 1 and rightRule[0] in self.terminals or \
-                    notTerminal == self.start and rightRule[0] == "Epselen":
+                    notTerminal == self.start and rightRule[0] == "Ɛ":
                     continue
                 
                 elif len(rightRule) == 2 and \
@@ -149,7 +149,7 @@ class Grammar:
                         self.rules[newNotTerminal] = [[firstElem, secondElem]]
                        
     def createFileFromGrammar(self, fileName: str) -> None:
-        with open(fileName, "w") as f:
+        with open(fileName, "w", encoding="utf-8") as f:
             for i in range(len(self.notTerminals)):
                 if i:
                     f.write(" ")
@@ -182,7 +182,7 @@ class Grammar:
             if len(self.rules[notTerminal][i]) > lenMaxPrefix:
                 newRightRules.append(self.rules[notTerminal][i][lenMaxPrefix:])
             else:
-                newRightRules.append(["Epselen"])
+                newRightRules.append(["Ɛ"])
 
         rightRules = []
         for i in range(len(self.rules[notTerminal])):
@@ -243,7 +243,7 @@ class Grammar:
             j = rightRules[i].index(replaceableNotTerminal)
             for substitutedRightRule in self.rules[replaceableNotTerminal]:
                 newRightRule = rightRules[i][:j]
-                if substitutedRightRule[0] != "Epselen":
+                if substitutedRightRule[0] != "Ɛ":
                     newRightRule.extend(substitutedRightRule)
                 newRightRule.extend(rightRules[i][j + 1:])
                 newRightRules.append(newRightRule)
@@ -263,7 +263,7 @@ class Grammar:
 
         for rightRule in deepcopy(self.rules[notTerminal]):
             if rightRule[0] != notTerminal:
-                if rightRule[0] == "Epselen":
+                if rightRule[0] == "Ɛ":
                     rightRule = [newNotTerminal]
                 else:
                     rightRule.append(newNotTerminal)
@@ -274,7 +274,7 @@ class Grammar:
                 rightRulesForNewNotTerminal.append(rightRule)
 
         if len(rightRulesForNewNotTerminal):
-            rightRulesForNewNotTerminal.append(["Epselen"])
+            rightRulesForNewNotTerminal.append(["Ɛ"])
             indexNotTerminal = self.notTerminals.index(notTerminal)
             self.notTerminals = \
                 self.notTerminals[:indexNotTerminal + 1] + [newNotTerminal] + \
@@ -300,7 +300,7 @@ class Grammar:
 
 
 def reedGrammarFromFile(fileName: str) -> Grammar:
-    with open(fileName) as f:
+    with open(fileName, encoding="utf-8") as f:
         lines = [line[:-1] for line in f.readlines()]
 
     notTerminals = lines[0].split(" ")

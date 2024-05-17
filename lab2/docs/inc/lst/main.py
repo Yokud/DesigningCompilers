@@ -1,19 +1,17 @@
-import subprocess
-
-from color import *
+import os
 from grammar import Grammar, reedGrammarFromFile
 
 
 MENU = f"""
-    {YELLOW}\tМеню\n
-    {YELLOW}1.{BASE}  Исходная грамматика;
-    {YELLOW}2.{BASE}  Грамматика после устранения левой рекурсии;
-    {YELLOW}3.{BASE}  Грамматика после устранения левой факторизации;
-    {YELLOW}4.{BASE}  Грамматика после устранения левой рекурсии и левой факторизации;
-    {YELLOW}5.{BASE}  Преобразование КС-грамматики к нормальной форме Хомского.
+    \tМеню\n
+    1.  Исходная грамматика;
+    2.  Грамматика после устранения левой рекурсии;
+    3.  Грамматика после устранения левой факторизации;
+    4.  Грамматика после устранения левой рекурсии и левой факторизации;
+    5.  Преобразование КС-грамматики к нормальной форме Хомского.
 
-    {YELLOW}0.{BASE}  Выход.\n
-    {GREEN}Выбор:{BASE} """
+    0.  Выход.\n
+    Выбор: """
 
 
 SIZE_MENU = 5
@@ -30,24 +28,26 @@ def inputOption(minOptions: int, maxOptions: int, msg: str):
             option = -1
     
     if option == -1:
-        print(f"{RED}\nОжидался ввод целого числа от {minOptions} до {maxOptions}{BASE}")
+        print(f"\nОжидался ввод целого числа от {minOptions} до {maxOptions}")
 
     return option
 
 
 def chooseInputFile() -> str:
     with open("temp.txt", "w") as f:
-        subprocess.run(["ls", "../data"], stdout=f)
+        files = os.listdir('../data')
+        for item in files:
+            f.write("%s\n" % item)
 
     with open("temp.txt") as f:
         fileNames = [line[:-1] for line in f.readlines()]
 
-    subprocess.run(["rm", "temp.txt"])
+    os.remove('temp.txt')
 
-    msg = f"\n\t{YELLOW}Входные файлы:{BASE}\n\n"
+    msg = f"\n\tВходные файлы:\n\n"
     for i in range(len(fileNames)):
-        msg += f"    {YELLOW}{i + 1}.{BASE}  {fileNames[i]};\n"
-    msg += f"\n    {GREEN}Выбор:{BASE} "
+        msg += f"    {i + 1}.  {fileNames[i]};\n"
+    msg += f"\n    Выбор: "
 
     option = -1
     while option == -1:
