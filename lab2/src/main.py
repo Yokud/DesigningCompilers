@@ -37,7 +37,8 @@ def chooseInputFile() -> str:
     with open("temp.txt", "w") as f:
         files = os.listdir('../data')
         for item in files:
-            f.write("%s\n" % item)
+            if item != os.path.basename(OUTPUT_FILE_NAME).split('/')[-1]:
+                f.write("%s\n" % item)
 
     with open("temp.txt") as f:
         fileNames = [line[:-1] for line in f.readlines()]
