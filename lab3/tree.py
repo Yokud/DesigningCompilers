@@ -36,9 +36,7 @@ class TreeNode:
         if parent:
             tree.edge(parent, id)
 
-        # print("IN:",  self.data, [ch.data for ch in self.children])
         for i, child in enumerate(self.children):
             child.print(tree, id, id + "." + str(i))
-        # print("OUT:",  self.data, [ch.data for ch in self.children])
 
         return tree

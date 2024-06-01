@@ -63,7 +63,6 @@ class Lexer:
 
     def expect(self, token_type):
         if self.current_token and self.current_token.type == token_type:
-            #print(f'Токен {self.current_token.value} типа {token_type}')
             token = self.current_token
             self.advance()
             return token

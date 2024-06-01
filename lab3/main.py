@@ -93,6 +93,8 @@ class Parser:
             if rec_tail: tail.add_child(rec_tail)
 
             return tail
+        else:
+            raise Exception(f'Отсутствует ;  конце выражения')
 
     def expression(self) -> TreeNode:
         '''
@@ -302,15 +304,15 @@ class Parser:
 
 code = '''
 { 
-    x = - y + 5; 
-    z = (x * (y - 2)) div 3; 
-    w = not (z + 10) or (x - 0);
+    x = - y + 5;
+    z = (x * (y - 2)) div 3;
+    w = not (z + 10) or (x - 0)
 }
 '''
 
 lexer = Lexer(code)
-print([token.value for token in lexer.tokens])
-print([token.type for token in lexer.tokens])
+#print([token.value for token in lexer.tokens])
+#print([token.type for token in lexer.tokens])
 parser = Parser(lexer)
 tree = parser.parse()
 tree.print().render()
